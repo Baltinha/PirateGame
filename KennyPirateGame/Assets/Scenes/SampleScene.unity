@@ -3818,6 +3818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 880478608}
+  m_bulletSpeed: 5
 --- !u!1001 &7837253474603436389
 PrefabInstance:
   m_ObjectHideFlags: 0
