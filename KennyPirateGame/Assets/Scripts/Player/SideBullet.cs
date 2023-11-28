@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SideBullet : MonoBehaviour
 {
-    
+    [SerializeField] float m_bulletDamage;
     private float m_timer = 2f;
     private float m_temptime;
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class SideBullet : MonoBehaviour
         if (collision == null)
             return;
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }

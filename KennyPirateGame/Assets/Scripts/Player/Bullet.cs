@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    
+    [SerializeField] float m_bulletDamage;
     private float m_timer = 2f;
     private float m_temptime;
     // Start is called before the first frame update
