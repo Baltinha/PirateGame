@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7719743036024291651}
   - component: {fileID: 2227091760958748567}
   - component: {fileID: 6140458124926047709}
-  - component: {fileID: 5879050471427574123}
+  - component: {fileID: -197798879908479751}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: SideBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.03, y: -1.36, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5879050471427574123
+--- !u!114 &-197798879908479751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,6 +122,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7341464582511491331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5fe9c5ec709b9e4eaf6b777d68a5f2f, type: 3}
+  m_Script: {fileID: 11500000, guid: f9bc8e3439c8fc54c93f37f9ba195c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class SideBullet : MonoBehaviour
 {
     
     private float m_timer = 2f;
@@ -15,20 +15,20 @@ public class Bullet : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
+        m_timer -= Time.deltaTime;
+        if (m_timer < 0)
+        {
+            Destroy(gameObject);
+            m_timer = m_temptime;
+        }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision == null)
         {
-            m_timer -= Time.deltaTime;
-            if (m_timer < 0)
-            {
-                gameObject.SetActive(false);
-                m_timer = m_temptime;
-            }
         }
 
         if (collision.gameObject.layer == 0)
