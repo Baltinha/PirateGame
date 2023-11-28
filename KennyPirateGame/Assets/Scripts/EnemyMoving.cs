@@ -10,19 +10,15 @@ public class EnemyMoving : MonoBehaviour
     [SerializeField] private float m_rotateSpeed;
 
     private int m_indexRandoPoints;
-    private Transform m_moveSprite;
-    private Transform m_target;
     private int m_indexTarget;
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
 
     void Start()
     {
         m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
-        m_moveSprite = GetComponentInChildren<Transform>().GetChild(0);
         RotateEnemy();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (StateOfEnemy == StateOfEnemy.Moving) 
@@ -41,8 +37,6 @@ public class EnemyMoving : MonoBehaviour
         {
             print("estou atacando");
         }
-
-
         //
         //    if (m_target)
         //    {
@@ -80,6 +74,7 @@ public class EnemyMoving : MonoBehaviour
         if (m_indexTarget >= m_movePoints.Length)
         {
             m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
+
             m_indexTarget = 0;
         }
     }
@@ -97,7 +92,8 @@ public class EnemyMoving : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             StateOfEnemy = StateOfEnemy.Attacking;
-            m_target = GameObject.FindGameObjectWithTag("Player").transform;
+
+            //m_target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 
