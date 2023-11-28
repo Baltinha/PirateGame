@@ -28,11 +28,12 @@ public class SideBullet : MonoBehaviour
     {
 
         if (collision == null)
-        {
-        }
+            return;
 
-        if (collision.gameObject.layer == 0)
-            gameObject.SetActive(false);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {

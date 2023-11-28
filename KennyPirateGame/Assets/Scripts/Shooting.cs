@@ -13,9 +13,6 @@ public class Shooting : MonoBehaviour
     private const string k_FireMainShoot = "Fire1"; 
     private const string k_FireSideShoot = "Fire2";
 
-    void Start()
-    {
-    }
 
     void Update()
     {

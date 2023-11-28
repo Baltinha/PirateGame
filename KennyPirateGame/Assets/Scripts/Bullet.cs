@@ -31,8 +31,10 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == 0)
+        if (collision.gameObject.CompareTag("Wall"))
+        {
             gameObject.SetActive(false);
+        }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
