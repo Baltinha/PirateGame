@@ -31,6 +31,10 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
     }
  
 }

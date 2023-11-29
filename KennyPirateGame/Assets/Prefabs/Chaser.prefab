@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 6423183578683637683}
   - component: {fileID: 3209029763614506390}
   - component: {fileID: 1826708344207725552}
+  - component: {fileID: 2449869416519456641}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2081547169998486573
 Transform:
   m_ObjectHideFlags: 0
@@ -135,13 +136,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.66, y: 1.13}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.66, y: 1.13}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.66, y: 1.13}
+  m_Size: {x: 0.72, y: 1.3}
   m_EdgeRadius: 0
 --- !u!114 &1826708344207725552
 MonoBehaviour:
@@ -168,6 +169,18 @@ MonoBehaviour:
   m_rotateSpeed: 720
   <StateOfEnemy>k__BackingField: 0
   <TypeOfEnemy>k__BackingField: 0
+--- !u!114 &2449869416519456641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808334949050309304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270dce83e1ac24345904cc27ea4df39e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7404091222819329470
 GameObject:
   m_ObjectHideFlags: 0

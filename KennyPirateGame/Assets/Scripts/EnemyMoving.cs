@@ -6,13 +6,18 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyMoving : MonoBehaviour
 { 
-    [SerializeField] private Transform[] m_movePoints;
+    [SerializeField] private Transform m_movePoints;
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotateSpeed;
+    [SerializeField] private float m_moveToNextSpotTimer = 3;
 
-
+    private float m_maxX;
+    private float m_minX;
+    private float m_maxY;
+    private float m_minY;
+    private Camera m_camera;
+    private float m_temptime;
     private Transform m_target;
-    private int m_indexRandoPoints;
     private int m_indexTarget;
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
@@ -20,52 +25,51 @@ public class EnemyMoving : MonoBehaviour
 
     public static EnemyMoving Instance { get; private set; }
 
+    private void Awake()
+    {
+        m_camera = Camera.main;
+    }
     void Start()
     {
+
+        var height = m_camera.orthographicSize;
+        var width = height * m_camera.aspect;
+
+        m_minX = + width;
+        m_minX = + width;
+
+        m_maxY = - height;
+        m_minY = + height;
+
+        m_temptime = m_moveToNextSpotTimer;
         Instance = this;
-        m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
-        RotateEnemy(m_movePoints[m_indexRandoPoints]);
+        RotateEnemy(m_movePoints);
+        m_movePoints.position = new Vector2(Random.Range(-5,10), Random.Range(7, -7));
     }
 
     void Update()
     {
+
         if (StateOfEnemy == StateOfEnemy.Moving) 
         {
-            if (transform.position == m_movePoints[m_indexRandoPoints].position)
+            
+            transform.position = Vector3.MoveTowards(transform.position, m_movePoints.position, m_speed * Time.deltaTime);
+
+            m_moveToNextSpotTimer -= Time.deltaTime;
+            if (m_moveToNextSpotTimer < 0)
             {
-                m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
+                m_movePoints.position = new Vector2(Random.Range(-5, 10), Random.Range(7, -7));
+                //m_movePoints.position = new Vector2(Random.Range(m_minX, m_minX), Random.Range(m_minY, m_minY));
 
-                RotateEnemy(m_movePoints[m_indexRandoPoints]);
+                RotateEnemy(m_movePoints);
 
-                IncreaseTargetInt();
+                m_moveToNextSpotTimer = m_temptime;
             }
-            transform.position = Vector3.MoveTowards(transform.position, m_movePoints[m_indexRandoPoints].position, m_speed * Time.deltaTime);
         }
-        else if (StateOfEnemy == StateOfEnemy.Attacking)
-        {
-            //switch (TypeOfEnemy)
-            //{
-            //    case TypeOfEnemy.Chaser:
-            //        if (m_target != null)
-            //        {
-            //            RotateEnemy(m_target);
-            //            transform.position = Vector3.MoveTowards(transform.position, m_target.position, m_speed * Time.deltaTime);
-            //        }
-            //        break;
-            //    case TypeOfEnemy.Shooter:
-            //        if (m_target != null) 
-            //        {
-            //            //EnemyShooring.Instance.FireMainShoot();
 
-            //        }
-            //        break;
-            //    default:
-            //        break;
-            //}
-        }
     }
 
-    private void RotateEnemy(Transform TransformTemp)
+    public void RotateEnemy(Transform TransformTemp)
     {
         if (TransformTemp == null)
             return;
@@ -79,27 +83,16 @@ public class EnemyMoving : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
-    private void IncreaseTargetInt()
-    {
-        m_indexTarget++;
-        if (m_indexTarget >= m_movePoints.Length)
-        {
-            m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
-
-            m_indexTarget = 0;
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             print("ai");
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("Explodiu");
-            Destroy(gameObject);
+            print("toma");
         }
     }
 
@@ -112,12 +105,18 @@ public class EnemyMoving : MonoBehaviour
             m_target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            StateOfEnemy = StateOfEnemy.Attacking;
+        }
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         StateOfEnemy = StateOfEnemy.Moving;
-        m_indexRandoPoints = Random.Range(0, m_movePoints.Length);
-        RotateEnemy(m_movePoints[m_indexRandoPoints]);
+        RotateEnemy(m_movePoints);
 
     }
 }

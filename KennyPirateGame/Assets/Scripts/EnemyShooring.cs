@@ -7,8 +7,8 @@ public class EnemyShooring : MonoBehaviour
     [SerializeField] private Transform m_targetFireMainShot;
     [SerializeField] private GameObject m_prefabBullet;
     [SerializeField] private float m_bulletSpeed = 10;
+    [SerializeField] private float m_shootTimer = 2;
 
-    [SerializeField] private float m_shootTimer = 5;
     private float m_temptime;
     private GameObject m_targetPosition;
 
@@ -24,11 +24,13 @@ public class EnemyShooring : MonoBehaviour
 
     private void Update()
     {
+
         if (EnemyMoving.Instance.TypeOfEnemy == TypeOfEnemy.Shooter && EnemyMoving.Instance.StateOfEnemy == StateOfEnemy.Attacking) 
         {
             m_shootTimer -= Time.deltaTime;
             if (m_shootTimer < 0)
             {
+                EnemyMoving.Instance.RotateEnemy(m_targetPosition.transform);
                 FireMainShoot();
                 m_shootTimer = m_temptime;
             }
@@ -40,11 +42,6 @@ public class EnemyShooring : MonoBehaviour
         if (m_targetFireMainShot == null)
             return;
 
-        //GameObject TempBullet = Instantiate(m_prefabBullet, m_targetFireMainShot.position, m_targetFireMainShot.rotation);
-
-        //Rigidbody2D TempRigd2D = TempBullet.GetComponent<Rigidbody2D>();
-
-        //TempRigd2D.AddForce(-m_targetPosition.transform.position * m_bulletSpeed, ForceMode2D.Impulse);
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null)
