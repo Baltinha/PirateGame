@@ -5,13 +5,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float m_bulletDamage;
-    private float m_timer = 2f;
-    private float m_temptime;
+
     // Start is called before the first frame update
 
     private void Start()
     {
-        m_temptime = Time.time;
+
     }
     private void FixedUpdate()
     {
@@ -21,15 +20,6 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision == null)
-        {
-            m_timer -= Time.deltaTime;
-            if (m_timer < 0)
-            {
-                gameObject.SetActive(false);
-                m_timer = m_temptime;
-            }
-        }
 
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -40,6 +30,7 @@ public class Bullet : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
     }
  
 }

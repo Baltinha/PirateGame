@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private Transform[] m_sideBulletsTarget;
     [SerializeField] private GameObject m_sideBulletPrefab;
@@ -12,7 +12,6 @@ public class Shooting : MonoBehaviour
 
     private const string k_FireMainShoot = "Fire1"; 
     private const string k_FireSideShoot = "Fire2";
-
 
     void Update()
     {
@@ -28,6 +27,8 @@ public class Shooting : MonoBehaviour
 
     private void FireMainShoot()
     {
+        if (m_targetFireMainShot == null)
+            return;
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null )
@@ -41,6 +42,10 @@ public class Shooting : MonoBehaviour
 
     private void FireSideBullet() 
     {
+        if (m_sideBulletPrefab == null)
+            return;
+        if (m_sideBulletsTarget == null)
+            return;
 
         GameObject sideBullet0 = Instantiate(m_sideBulletPrefab, m_sideBulletsTarget[0].position, m_sideBulletsTarget[0].rotation);
         GameObject sideBullet1 = Instantiate(m_sideBulletPrefab, m_sideBulletsTarget[1].position, m_sideBulletsTarget[0].rotation);
