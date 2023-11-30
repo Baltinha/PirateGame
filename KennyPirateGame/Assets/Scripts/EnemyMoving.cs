@@ -11,19 +11,15 @@ public class EnemyMoving : MonoBehaviour
     [SerializeField] private float m_rotateSpeed;
     [SerializeField] private float m_moveToNextSpotTimer = 3;
 
-    private float m_maxX;
-    private float m_minX;
-    private float m_maxY;
-    private float m_minY;
     private Camera m_camera;
-    private float m_temptime;
     private Transform m_target;
     private int m_indexTarget;
+    private float m_temptime;
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
     [field: SerializeField] public TypeOfEnemy TypeOfEnemy { get; private set; }
 
-    public static EnemyMoving Instance { get; private set; }
+    public Transform MovePoints { get => m_movePoints; set => m_movePoints = value; }
 
     private void Awake()
     {
@@ -31,20 +27,8 @@ public class EnemyMoving : MonoBehaviour
     }
     void Start()
     {
-
-        var height = m_camera.orthographicSize;
-        var width = height * m_camera.aspect;
-
-        m_minX = + width;
-        m_minX = + width;
-
-        m_maxY = - height;
-        m_minY = + height;
-
         m_temptime = m_moveToNextSpotTimer;
-        Instance = this;
         RotateEnemy(m_movePoints);
-        m_movePoints.position = new Vector2(Random.Range(-5,10), Random.Range(7, -7));
     }
 
     void Update()
@@ -58,8 +42,6 @@ public class EnemyMoving : MonoBehaviour
             m_moveToNextSpotTimer -= Time.deltaTime;
             if (m_moveToNextSpotTimer < 0)
             {
-                m_movePoints.position = new Vector2(Random.Range(-5, 10), Random.Range(7, -7));
-                //m_movePoints.position = new Vector2(Random.Range(m_minX, m_minX), Random.Range(m_minY, m_minY));
 
                 RotateEnemy(m_movePoints);
 

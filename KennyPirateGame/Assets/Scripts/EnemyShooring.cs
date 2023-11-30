@@ -9,28 +9,28 @@ public class EnemyShooring : MonoBehaviour
     [SerializeField] private float m_bulletSpeed = 10;
     [SerializeField] private float m_shootTimer = 2;
 
+    private EnemyMoving enemyMoving;
     private float m_temptime;
     private GameObject m_targetPosition;
 
-    public static EnemyShooring Instance { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
+        enemyMoving = GetComponent<EnemyMoving>();
         m_targetPosition = GameObject.FindGameObjectWithTag("Player");
         m_temptime = m_shootTimer;
-        Instance = this;
     }
 
     private void Update()
     {
 
-        if (EnemyMoving.Instance.TypeOfEnemy == TypeOfEnemy.Shooter && EnemyMoving.Instance.StateOfEnemy == StateOfEnemy.Attacking) 
+        if (enemyMoving.TypeOfEnemy == TypeOfEnemy.Shooter && enemyMoving.StateOfEnemy == StateOfEnemy.Attacking) 
         {
             m_shootTimer -= Time.deltaTime;
             if (m_shootTimer < 0)
             {
-                EnemyMoving.Instance.RotateEnemy(m_targetPosition.transform);
+                enemyMoving.RotateEnemy(m_targetPosition.transform);
                 FireMainShoot();
                 m_shootTimer = m_temptime;
             }

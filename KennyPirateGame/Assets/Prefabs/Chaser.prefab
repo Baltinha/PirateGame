@@ -156,17 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0a487390b03e745877bafa4d6081c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_movePoints: {fileID: 0}
   m_speed: 2
   m_rotateSpeed: 720
+  m_moveToNextSpotTimer: 3
   <StateOfEnemy>k__BackingField: 0
   <TypeOfEnemy>k__BackingField: 0
 --- !u!114 &2449869416519456641
@@ -181,6 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270dce83e1ac24345904cc27ea4df39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_explodeSpeed: 2
+  m_explodeTimer: 2
 --- !u!1 &7404091222819329470
 GameObject:
   m_ObjectHideFlags: 0
