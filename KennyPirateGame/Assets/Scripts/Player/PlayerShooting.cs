@@ -5,23 +5,46 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    [Header("Shooting")]
     [SerializeField] private Transform[] m_sideBulletsTarget;
     [SerializeField] private GameObject m_sideBulletPrefab;
     [SerializeField] private Transform m_targetFireMainShot;
-    [SerializeField] private float m_bulletSpeed = 10;
+    [SerializeField] private float m_bulletSpeed = 10f;
+    [SerializeField] private float m_shootTimer;
+
+
+    private float m_temptime;
 
     private const string k_FireMainShoot = "Fire1"; 
     private const string k_FireSideShoot = "Fire2";
 
+
+
+    private void Start()
+    {
+        m_temptime = m_shootTimer;
+    }
     void Update()
     {
+        m_shootTimer -= Time.deltaTime;
         if (Input.GetButtonDown(k_FireMainShoot) && !Input.GetButtonDown(k_FireSideShoot)) 
         {
-            FireMainShoot();
+            
+            if (m_shootTimer < 0)
+            {
+                FireMainShoot();
+                m_shootTimer = m_temptime;
+            }
         }
-        if (Input.GetButtonDown(k_FireSideShoot) && !Input.GetButtonDown(k_FireMainShoot))
+        else if (Input.GetButtonDown(k_FireSideShoot) && !Input.GetButtonDown(k_FireMainShoot))
         {
-            FireSideBullet();
+            
+            if (m_shootTimer < 0)
+            {
+                FireSideBullet();
+                m_shootTimer = m_temptime;
+            }
+            
         }
     }
 
@@ -29,6 +52,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (m_targetFireMainShot == null)
             return;
+
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null )
@@ -59,4 +83,5 @@ public class PlayerShooting : MonoBehaviour
         sideRb1.AddForce(-sideBullet1.transform.right * m_bulletSpeed, ForceMode2D.Impulse);
         sideRb2.AddForce(-sideBullet2.transform.right * m_bulletSpeed, ForceMode2D.Impulse);
     }
+
 }

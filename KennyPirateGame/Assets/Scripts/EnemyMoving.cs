@@ -5,48 +5,77 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyMoving : MonoBehaviour
-{ 
-    [SerializeField] private Transform m_movePoints;
+{
+    [Header("Moving")]
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotateSpeed;
-    [SerializeField] private float m_moveToNextSpotTimer = 3;
+    [Header("Health")]
+    [SerializeField] private float m_maxHeath = 100f;
+    [Header("Chaser")]
+    [SerializeField] private float m_explodeTimer = 2f;
+    [SerializeField] private float m_explodeSpeed;
+    [SerializeField] private float m_explodeDamage;
 
-    private Camera m_camera;
-    private Transform m_target;
-    private int m_indexTarget;
+    private float m_currentHealth;
+    private FloatHealthBar m_healthBar;
+    private Transform m_targetPlayer;
     private float m_temptime;
+    private Movement m_movement;
+    
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
     [field: SerializeField] public TypeOfEnemy TypeOfEnemy { get; private set; }
 
-    public Transform MovePoints { get => m_movePoints; set => m_movePoints = value; }
 
     private void Awake()
     {
-        m_camera = Camera.main;
+        m_healthBar = GetComponentInChildren<FloatHealthBar>();
+        m_targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+        m_movement = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
     }
     void Start()
     {
-        m_temptime = m_moveToNextSpotTimer;
-        RotateEnemy(m_movePoints);
+        m_temptime = m_explodeTimer;
+        RotateEnemy(m_targetPlayer);
+        m_currentHealth = m_maxHeath;
+        m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
     }
 
     void Update()
     {
-
+        if (m_targetPlayer != null)
+            return;
         if (StateOfEnemy == StateOfEnemy.Moving) 
         {
-            
-            transform.position = Vector3.MoveTowards(transform.position, m_movePoints.position, m_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.position, m_speed * Time.deltaTime);
+            RotateEnemy(m_targetPlayer);
+        }
+        if (TypeOfEnemy == TypeOfEnemy.Chaser && StateOfEnemy == StateOfEnemy.Attacking)
+        {
+            m_explodeTimer -= Time.deltaTime;
+            RotateEnemy(m_targetPlayer.transform);
+            transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.transform.position, m_explodeSpeed * Time.deltaTime);
+        }
+        if (m_explodeTimer < 0)
+        {
+            //adicionar animação
+            //Destroy(gameObject);
+            this.gameObject.SetActive(false);
+            m_movement.CurrentHealth -= m_explodeDamage;
+            m_movement.HealthBar.UpdateHealthBar(m_movement.CurrentHealth, m_movement.MaxHeath);
+            print("Explodiu");
+            m_explodeTimer = m_temptime;
 
-            m_moveToNextSpotTimer -= Time.deltaTime;
-            if (m_moveToNextSpotTimer < 0)
-            {
+        }
 
-                RotateEnemy(m_movePoints);
 
-                m_moveToNextSpotTimer = m_temptime;
-            }
+        if (m_currentHealth <= 0)
+        {
+            print("morreu");
+            this.gameObject.SetActive(false);
+            GameManager.Instance.PointsInGame += 1;
+            //Destroy(gameObject);
+            //Adicionar ponto ao jogador
         }
 
     }
@@ -70,21 +99,26 @@ public class EnemyMoving : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            print("ai");
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            m_currentHealth -= bullet.BulletDamage;
+            m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
         }
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("SideBullet"))
         {
-            print("toma");
+            SideBullet bullet = collision.gameObject.GetComponent<SideBullet>();
+            m_currentHealth -= bullet.BulletDamage;
+            m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+           
             StateOfEnemy = StateOfEnemy.Attacking;
 
-            m_target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -92,13 +126,12 @@ public class EnemyMoving : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             StateOfEnemy = StateOfEnemy.Attacking;
+
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         StateOfEnemy = StateOfEnemy.Moving;
-        RotateEnemy(m_movePoints);
-
     }
+
 }

@@ -7,6 +7,9 @@ public class SideBullet : MonoBehaviour
     [SerializeField] float m_bulletDamage;
     private float m_timer = 2f;
     private float m_temptime;
+
+    public float BulletDamage { get => m_bulletDamage; set => m_bulletDamage = value; }
+
     // Start is called before the first frame update
 
     private void Start()
@@ -28,7 +31,8 @@ public class SideBullet : MonoBehaviour
     {
 
         if (collision == null)
-            return;
+            Destroy(gameObject);
+
 
         if (collision.gameObject.CompareTag("Wall"))
         {
@@ -38,6 +42,7 @@ public class SideBullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
  

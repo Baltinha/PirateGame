@@ -6,17 +6,27 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotatespeed;
+    [SerializeField] private float m_maxHeath;
 
+    private float m_currentHealth;
     private float m_Horizontal;
     private float m_Vertical;
     private Transform m_Sprite;
-
+    private FloatHealthBar m_healthBar;
 
     private const string k_Horizontal = "Horizontal";
     private const string k_Vertical = "Vertical";
+
+    public float CurrentHealth { get => m_currentHealth; set => m_currentHealth = value; }
+    public float MaxHeath { get => m_maxHeath; set => m_maxHeath = value; }
+    public FloatHealthBar HealthBar { get => m_healthBar; set => m_healthBar = value; }
+
     void Start()
     {
+        m_currentHealth = m_maxHeath;
+        m_healthBar = GetComponentInChildren<FloatHealthBar>();
         m_Sprite = GetComponentInChildren<Transform>().GetChild(0);
+        m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
     }
 
     // Update is called once per frame
@@ -36,6 +46,24 @@ public class Movement : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(Vector3.forward, movement);
             m_Sprite.transform.rotation = Quaternion.RotateTowards(m_Sprite.transform.rotation,rotation, m_rotatespeed * Time.deltaTime);
         }
+
+        if (m_currentHealth == 0)
+        {
+            print("morreu");
+            this.gameObject.SetActive(false);
+            Time.timeScale = 0f;
+            //Mandar para o Menu
+        }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            m_currentHealth -= bullet.BulletDamage;
+            print(bullet.BulletDamage);
+            m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
+        }
+    }
 }

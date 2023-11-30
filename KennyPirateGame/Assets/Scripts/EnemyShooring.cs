@@ -6,10 +6,10 @@ public class EnemyShooring : MonoBehaviour
 {
     [SerializeField] private Transform m_targetFireMainShot;
     [SerializeField] private GameObject m_prefabBullet;
-    [SerializeField] private float m_bulletSpeed = 10;
-    [SerializeField] private float m_shootTimer = 2;
+    [SerializeField] private float m_shootTimer = 2f;
+    [SerializeField] private float m_bulletForce;
 
-    private EnemyMoving enemyMoving;
+    private EnemyMoving m_enemyMoving;
     private float m_temptime;
     private GameObject m_targetPosition;
 
@@ -17,7 +17,7 @@ public class EnemyShooring : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyMoving = GetComponent<EnemyMoving>();
+        m_enemyMoving = GetComponent<EnemyMoving>();
         m_targetPosition = GameObject.FindGameObjectWithTag("Player");
         m_temptime = m_shootTimer;
     }
@@ -25,12 +25,12 @@ public class EnemyShooring : MonoBehaviour
     private void Update()
     {
 
-        if (enemyMoving.TypeOfEnemy == TypeOfEnemy.Shooter && enemyMoving.StateOfEnemy == StateOfEnemy.Attacking) 
+        if (m_enemyMoving.TypeOfEnemy == TypeOfEnemy.Shooter && m_enemyMoving.StateOfEnemy == StateOfEnemy.Attacking) 
         {
             m_shootTimer -= Time.deltaTime;
             if (m_shootTimer < 0)
             {
-                enemyMoving.RotateEnemy(m_targetPosition.transform);
+                m_enemyMoving.RotateEnemy(m_targetPosition.transform);
                 FireMainShoot();
                 m_shootTimer = m_temptime;
             }
@@ -42,6 +42,7 @@ public class EnemyShooring : MonoBehaviour
         if (m_targetFireMainShot == null)
             return;
 
+        //Instantiate(m_prefabBullet, m_targetFireMainShot.position, Quaternion.identity);
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null)
@@ -49,7 +50,9 @@ public class EnemyShooring : MonoBehaviour
             bullet.transform.position = m_targetFireMainShot.position;
             bullet.SetActive(true);
             Rigidbody2D TempRb = bullet.GetComponent<Rigidbody2D>();
-            TempRb.AddForce(-m_targetPosition.transform.position * m_bulletSpeed, ForceMode2D.Impulse);
+            TempRb.velocity = Vector2.zero;
+            TempRb.AddForce(m_targetFireMainShot.right * m_bulletForce, ForceMode2D.Impulse);
+            
         }
     }
 }

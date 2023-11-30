@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyExplode : MonoBehaviour
 {
     [SerializeField] private float m_explodeSpeed;
-    [SerializeField] private float m_explodeTimer = 2;
+    [SerializeField] private float m_explodeTimer = 2f;
 
     private EnemyMoving enemyMoving;
     private GameObject m_targetPosition;
@@ -33,6 +33,7 @@ public class EnemyExplode : MonoBehaviour
             Destroy(gameObject);
             m_explodeTimer = m_temptime;
         }
+
     }
     
 

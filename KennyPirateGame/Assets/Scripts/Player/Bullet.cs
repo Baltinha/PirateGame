@@ -6,17 +6,10 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float m_bulletDamage;
 
+    public float BulletDamage { get => m_bulletDamage; set => m_bulletDamage = value; }
+
     // Start is called before the first frame update
 
-    private void Start()
-    {
-
-    }
-    private void FixedUpdate()
-    {
-
-
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

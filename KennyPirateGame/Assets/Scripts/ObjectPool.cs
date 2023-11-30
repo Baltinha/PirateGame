@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private int m_amountPoll = 10;
-    [SerializeField] private GameObject m_bullet;
+    [SerializeField] private GameObject m_poolObject;
 
     private List<GameObject> m_pool = new List<GameObject>();
 
@@ -21,7 +21,7 @@ public class ObjectPool : MonoBehaviour
     {
         for (int i = 0; i < m_amountPoll; i++)
         {
-            GameObject obj = Instantiate(m_bullet);
+            GameObject obj = Instantiate(m_poolObject);
             obj.SetActive(false);
             m_pool.Add(obj);
         }
