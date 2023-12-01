@@ -15,20 +15,21 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
 
-        if (m_enemysPrefab == null || m_spawnPoints == null)
-            return;
+            if (m_enemysPrefab == null || m_spawnPoints == null)
+                return;
 
-        m_spawnRandomCount = Random.Range(0, m_spawnPoints.Length);
-        for (int i = 0; i < m_amountPoll; i++)
-        {
-            int indexPrefab = Random.Range(0, m_enemysPrefab.Length);
-            GameObject obj = Instantiate(m_enemysPrefab[indexPrefab], m_spawnPoints[m_spawnRandomCount].position, Quaternion.identity);
-            obj.SetActive(false);
-            m_pool.Add(obj);
             m_spawnRandomCount = Random.Range(0, m_spawnPoints.Length);
-        }
+            for (int i = 0; i < m_amountPoll; i++)
+            {
+                int indexPrefab = Random.Range(0, m_enemysPrefab.Length);
+                GameObject obj = Instantiate(m_enemysPrefab[indexPrefab], m_spawnPoints[m_spawnRandomCount].position, Quaternion.identity);
+                obj.SetActive(false);
+                m_pool.Add(obj);
+                m_spawnRandomCount = Random.Range(0, m_spawnPoints.Length);
+            }
 
-        StartCoroutine(SpawnerEnemys());
+            StartCoroutine(SpawnerEnemys());
+        
     }
 
     private IEnumerator SpawnerEnemys() 

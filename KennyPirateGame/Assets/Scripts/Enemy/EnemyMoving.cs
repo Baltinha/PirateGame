@@ -43,8 +43,9 @@ public class EnemyMoving : MonoBehaviour
 
     void Update()
     {
-        if (m_targetPlayer != null)
+        if (m_targetPlayer == null)
             return;
+
         if (StateOfEnemy == StateOfEnemy.Moving) 
         {
             transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.position, m_speed * Time.deltaTime);
@@ -59,8 +60,8 @@ public class EnemyMoving : MonoBehaviour
         if (m_explodeTimer < 0)
         {
             //adicionar animação
-            //Destroy(gameObject);
-            this.gameObject.SetActive(false);
+            Destroy(gameObject);
+            //this.gameObject.SetActive(false);
             m_movement.CurrentHealth -= m_explodeDamage;
             m_movement.HealthBar.UpdateHealthBar(m_movement.CurrentHealth, m_movement.MaxHeath);
             print("Explodiu");
@@ -72,10 +73,11 @@ public class EnemyMoving : MonoBehaviour
         if (m_currentHealth <= 0)
         {
             print("morreu");
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
+            //m_currentHealth = m_maxHeath;
+            //this.transform.position = Vector3.zero;
             GameManager.Instance.PointsInGame += 1;
-            //Destroy(gameObject);
-            //Adicionar ponto ao jogador
+            Destroy(gameObject);
         }
 
     }

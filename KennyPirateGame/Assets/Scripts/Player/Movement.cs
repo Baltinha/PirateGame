@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotatespeed;
     [SerializeField] private float m_maxHeath;
+    [SerializeField] private Image m_imageFinal;
 
     private float m_currentHealth;
     private float m_Horizontal;
@@ -32,27 +34,30 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Horizontal = Input.GetAxisRaw(k_Horizontal);
-        m_Vertical = Input.GetAxisRaw(k_Vertical);
-
-        Vector2 movement = new Vector2(m_Horizontal, m_Vertical);
-        float InputMagnitude = Mathf.Clamp01(movement.magnitude);
-        movement.Normalize();
-
-        transform.Translate(movement * m_speed * InputMagnitude * Time.deltaTime, Space.World);
-
-        if (movement != Vector2.zero)
+        if (GameManager.Instance.TimeRemaining < GameManager.Instance.GameTime)
         {
-            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, movement);
-            m_Sprite.transform.rotation = Quaternion.RotateTowards(m_Sprite.transform.rotation,rotation, m_rotatespeed * Time.deltaTime);
-        }
+            m_Horizontal = Input.GetAxisRaw(k_Horizontal);
+            m_Vertical = Input.GetAxisRaw(k_Vertical);
 
-        if (m_currentHealth == 0)
-        {
-            print("morreu");
-            this.gameObject.SetActive(false);
-            Time.timeScale = 0f;
-            //Mandar para o Menu
+            Vector2 movement = new Vector2(m_Horizontal, m_Vertical);
+            float InputMagnitude = Mathf.Clamp01(movement.magnitude);
+            movement.Normalize();
+
+            transform.Translate(movement * m_speed * InputMagnitude * Time.deltaTime, Space.World);
+
+            if (movement != Vector2.zero)
+            {
+                Quaternion rotation = Quaternion.LookRotation(Vector3.forward, movement);
+                m_Sprite.transform.rotation = Quaternion.RotateTowards(m_Sprite.transform.rotation, rotation, m_rotatespeed * Time.deltaTime);
+            }
+
+            if (m_currentHealth == 0)
+            {
+                print("morreu");
+                this.gameObject.SetActive(false);
+                //m_imageFinal.gameObject.SetActive(true);
+                //Mandar para o Menu
+            }
         }
     }
 
@@ -62,7 +67,6 @@ public class Movement : MonoBehaviour
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             m_currentHealth -= bullet.BulletDamage;
-            print(bullet.BulletDamage);
             m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
         }
     }
