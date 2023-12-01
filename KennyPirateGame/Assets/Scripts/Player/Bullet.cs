@@ -28,6 +28,14 @@ public class Bullet : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            gameObject.SetActive(false);
+        }
+        if (collision.gameObject.CompareTag("SideBullet"))
+        {
+            gameObject.SetActive(false);
+        }
     }
  
 }

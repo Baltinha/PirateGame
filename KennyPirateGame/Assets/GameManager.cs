@@ -6,32 +6,32 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Range(60f,180f)]
-    [SerializeField] private float m_gameTime; 
+    [SerializeField] private float m_gameTime;
+    [SerializeField] private TMP_Text m_textTime;
+    [SerializeField] private Image m_imageFinal;
 
     private int m_pointsInGame;
-    private bool m_timeIsRunning = true;
+    private bool m_timeIsRunning = false;
     private float m_timeRemaining = 0;
-    public TMP_Text m_textTime;
-    public Image m_imageFinal;
+
 
     public float GameTime { get => m_gameTime; set => m_gameTime = value; }
     public int PointsInGame { get => m_pointsInGame; set => m_pointsInGame = value; }
 
     public static GameManager Instance { get; private set; }
-    public float TimeRemaining { get => m_timeRemaining; set => m_timeRemaining = value; }
+    public bool TimeIsRunning { get => m_timeIsRunning; set => m_timeIsRunning = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //GameTime = m_gameTime;
         Instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_timeIsRunning) 
+        if (TimeIsRunning) 
         {
             if (m_timeRemaining >= 0)
             {
@@ -39,8 +39,9 @@ public class GameManager : MonoBehaviour
                 DisplayTime(m_timeRemaining);
             } 
         }
-        if (m_timeRemaining >= m_gameTime) 
+        if (m_timeRemaining >= GameTime) 
         {
+            Time.timeScale = 0f;
             m_imageFinal.gameObject.SetActive(true);
         }
 

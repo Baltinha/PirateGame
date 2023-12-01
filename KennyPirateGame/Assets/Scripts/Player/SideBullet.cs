@@ -44,6 +44,10 @@ public class SideBullet : MonoBehaviour
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
  
 }

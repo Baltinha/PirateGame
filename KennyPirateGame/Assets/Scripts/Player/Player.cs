@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Movement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotatespeed;
@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.TimeRemaining < GameManager.Instance.GameTime)
+        if (GameManager.Instance.TimeIsRunning)
         {
             m_Horizontal = Input.GetAxisRaw(k_Horizontal);
             m_Vertical = Input.GetAxisRaw(k_Vertical);
@@ -51,13 +51,14 @@ public class Movement : MonoBehaviour
                 m_Sprite.transform.rotation = Quaternion.RotateTowards(m_Sprite.transform.rotation, rotation, m_rotatespeed * Time.deltaTime);
             }
 
-            if (m_currentHealth == 0)
-            {
-                print("morreu");
-                this.gameObject.SetActive(false);
-                //m_imageFinal.gameObject.SetActive(true);
-                //Mandar para o Menu
-            }
+
+        }
+        if (m_currentHealth <= 0 )
+        {
+            this.gameObject.SetActive(false);
+            m_imageFinal.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+            GameManager.Instance.TimeIsRunning = false;
         }
     }
 

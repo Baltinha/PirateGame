@@ -26,25 +26,28 @@ public class PlayerShooting : MonoBehaviour
     }
     void Update()
     {
-        m_shootTimer -= Time.deltaTime;
-        if (Input.GetButtonDown(k_FireMainShoot) && !Input.GetButtonDown(k_FireSideShoot)) 
+        if (GameManager.Instance.TimeIsRunning)
         {
-            
-            if (m_shootTimer < 0)
+            m_shootTimer -= Time.deltaTime;
+            if (Input.GetButtonDown(k_FireMainShoot) && !Input.GetButtonDown(k_FireSideShoot))
             {
-                FireMainShoot();
-                m_shootTimer = m_temptime;
+
+                if (m_shootTimer < 0)
+                {
+                    FireMainShoot();
+                    m_shootTimer = m_temptime;
+                }
             }
-        }
-        else if (Input.GetButtonDown(k_FireSideShoot) && !Input.GetButtonDown(k_FireMainShoot))
-        {
-            
-            if (m_shootTimer < 0)
+            else if (Input.GetButtonDown(k_FireSideShoot) && !Input.GetButtonDown(k_FireMainShoot))
             {
-                FireSideBullet();
-                m_shootTimer = m_temptime;
+
+                if (m_shootTimer < 0)
+                {
+                    FireSideBullet();
+                    m_shootTimer = m_temptime;
+                }
+
             }
-            
         }
     }
 

@@ -24,15 +24,18 @@ public class EnemyShooring : MonoBehaviour
 
     private void Update()
     {
-
-        if (m_enemyMoving.TypeOfEnemy == TypeOfEnemy.Shooter && m_enemyMoving.StateOfEnemy == StateOfEnemy.Attacking) 
+        if (GameManager.Instance.TimeIsRunning)
         {
-            m_shootTimer -= Time.deltaTime;
-            if (m_shootTimer < 0)
+
+            if (m_enemyMoving.TypeOfEnemy == TypeOfEnemy.Shooter && m_enemyMoving.StateOfEnemy == StateOfEnemy.Attacking)
             {
-                m_enemyMoving.RotateEnemy(m_targetPosition.transform);
-                FireMainShoot();
-                m_shootTimer = m_temptime;
+                m_shootTimer -= Time.deltaTime;
+                if (m_shootTimer < 0)
+                {
+                    m_enemyMoving.RotateEnemy(m_targetPosition.transform);
+                    FireMainShoot();
+                    m_shootTimer = m_temptime;
+                }
             }
         }
     }

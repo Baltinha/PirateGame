@@ -20,7 +20,7 @@ public class EnemyMoving : MonoBehaviour
     private FloatHealthBar m_healthBar;
     private Transform m_targetPlayer;
     private float m_temptime;
-    private Movement m_movement;
+    private Player m_movement;
     
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
@@ -31,7 +31,7 @@ public class EnemyMoving : MonoBehaviour
     {
         m_healthBar = GetComponentInChildren<FloatHealthBar>();
         m_targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
-        m_movement = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
+        m_movement = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     void Start()
     {
@@ -43,41 +43,43 @@ public class EnemyMoving : MonoBehaviour
 
     void Update()
     {
-        if (m_targetPlayer == null)
-            return;
-
-        if (StateOfEnemy == StateOfEnemy.Moving) 
+        if (GameManager.Instance.TimeIsRunning)
         {
-            transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.position, m_speed * Time.deltaTime);
-            RotateEnemy(m_targetPlayer);
-        }
-        if (TypeOfEnemy == TypeOfEnemy.Chaser && StateOfEnemy == StateOfEnemy.Attacking)
-        {
-            m_explodeTimer -= Time.deltaTime;
-            RotateEnemy(m_targetPlayer.transform);
-            transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.transform.position, m_explodeSpeed * Time.deltaTime);
-        }
-        if (m_explodeTimer < 0)
-        {
-            //adicionar animação
-            Destroy(gameObject);
-            //this.gameObject.SetActive(false);
-            m_movement.CurrentHealth -= m_explodeDamage;
-            m_movement.HealthBar.UpdateHealthBar(m_movement.CurrentHealth, m_movement.MaxHeath);
-            print("Explodiu");
-            m_explodeTimer = m_temptime;
 
-        }
+            if (m_targetPlayer == null)
+                return;
+
+            if (StateOfEnemy == StateOfEnemy.Moving)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.position, m_speed * Time.deltaTime);
+                RotateEnemy(m_targetPlayer);
+            }
+            if (TypeOfEnemy == TypeOfEnemy.Chaser && StateOfEnemy == StateOfEnemy.Attacking)
+            {
+                m_explodeTimer -= Time.deltaTime;
+                RotateEnemy(m_targetPlayer.transform);
+                transform.position = Vector3.MoveTowards(transform.position, m_targetPlayer.transform.position, m_explodeSpeed * Time.deltaTime);
+            }
+            if (m_explodeTimer < 0)
+            {
+                //adicionar animação
+                Destroy(gameObject);
+                //this.gameObject.SetActive(false);
+                m_movement.CurrentHealth -= m_explodeDamage;
+                m_movement.HealthBar.UpdateHealthBar(m_movement.CurrentHealth, m_movement.MaxHeath);
+                m_explodeTimer = m_temptime;
+
+            }
 
 
-        if (m_currentHealth <= 0)
-        {
-            print("morreu");
-            //this.gameObject.SetActive(false);
-            //m_currentHealth = m_maxHeath;
-            //this.transform.position = Vector3.zero;
-            GameManager.Instance.PointsInGame += 1;
-            Destroy(gameObject);
+            if (m_currentHealth <= 0)
+            {
+                //this.gameObject.SetActive(false);
+                //m_currentHealth = m_maxHeath;
+                //this.transform.position = Vector3.zero;
+                GameManager.Instance.PointsInGame += 1;
+                Destroy(gameObject);
+            }
         }
 
     }

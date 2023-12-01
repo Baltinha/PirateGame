@@ -376,9 +376,9 @@ MonoBehaviour:
   m_speed: 1.5
   m_rotateSpeed: 720
   m_maxHeath: 50
-  m_explodeTimer: 2
+  m_explodeTimer: 1
   m_explodeSpeed: 3
-  m_explodeDamage: 20
+  m_explodeDamage: 15
   <StateOfEnemy>k__BackingField: 0
   <TypeOfEnemy>k__BackingField: 0
 --- !u!58 &9189262368197576901
