@@ -31,7 +31,6 @@ public class PlayerShooting : MonoBehaviour
             m_shootTimer -= Time.deltaTime;
             if (Input.GetButtonDown(k_FireMainShoot) && !Input.GetButtonDown(k_FireSideShoot))
             {
-
                 if (m_shootTimer < 0)
                 {
                     FireMainShoot();
@@ -59,7 +58,8 @@ public class PlayerShooting : MonoBehaviour
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null )
-        {   
+        {
+            bullet.GetComponent<Bullet>().Name = this.gameObject.tag;
             bullet.transform.position = m_targetFireMainShot.position;
             bullet.SetActive(true);
             Rigidbody2D TempRb = bullet.GetComponent<Rigidbody2D>();

@@ -20,7 +20,8 @@ public class EnemyMoving : MonoBehaviour
     private FloatHealthBar m_healthBar;
     private Transform m_targetPlayer;
     private float m_temptime;
-    private Player m_movement;
+    private Player m_movementPlayer;
+    private Animator m_animator;
     
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
@@ -29,9 +30,10 @@ public class EnemyMoving : MonoBehaviour
 
     private void Awake()
     {
+        m_animator = GetComponent<Animator>();
         m_healthBar = GetComponentInChildren<FloatHealthBar>();
         m_targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
-        m_movement = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        m_movementPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     void Start()
     {
@@ -62,11 +64,8 @@ public class EnemyMoving : MonoBehaviour
             }
             if (m_explodeTimer < 0)
             {
-                //adicionar animação
-                Destroy(gameObject);
-                //this.gameObject.SetActive(false);
-                m_movement.CurrentHealth -= m_explodeDamage;
-                m_movement.HealthBar.UpdateHealthBar(m_movement.CurrentHealth, m_movement.MaxHeath);
+                
+                m_animator.SetBool("ItsExplode", true);
                 m_explodeTimer = m_temptime;
 
             }
@@ -138,4 +137,15 @@ public class EnemyMoving : MonoBehaviour
         StateOfEnemy = StateOfEnemy.Moving;
     }
 
+    public void DestroyChaser() 
+    {
+        DelayPlayerDamageTaken();
+        Destroy(gameObject);
+    }
+
+    public void DelayPlayerDamageTaken() 
+    {
+        m_movementPlayer.CurrentHealth -= m_explodeDamage;
+        m_movementPlayer.HealthBar.UpdateHealthBar(m_movementPlayer.CurrentHealth, m_movementPlayer.MaxHeath);
+    }
 }

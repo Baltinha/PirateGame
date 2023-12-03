@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 3209029763614506390}
   - component: {fileID: 1826708344207725552}
   - component: {fileID: 9189262368197576901}
+  - component: {fileID: 7941438508087775772}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: Enemy
@@ -352,8 +353,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.66, y: 1.13}
-    newSize: {x: 0.66, y: 1.13}
+    oldSize: {x: 0.74, y: 0.75}
+    newSize: {x: 0.74, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -377,7 +378,7 @@ MonoBehaviour:
   m_rotateSpeed: 720
   m_maxHeath: 50
   m_explodeTimer: 1
-  m_explodeSpeed: 3
+  m_explodeSpeed: 2
   m_explodeDamage: 15
   <StateOfEnemy>k__BackingField: 0
   <TypeOfEnemy>k__BackingField: 0
@@ -416,6 +417,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!95 &7941438508087775772
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808334949050309304}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f33712bdc1c609419c7f4ec32d69e7d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7404091222819329470
 GameObject:
   m_ObjectHideFlags: 0

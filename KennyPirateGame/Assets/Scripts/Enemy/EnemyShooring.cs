@@ -50,6 +50,7 @@ public class EnemyShooring : MonoBehaviour
 
         if (bullet != null)
         {
+            bullet.GetComponent<Bullet>().Name = this.gameObject.tag;
             bullet.transform.position = m_targetFireMainShot.position;
             bullet.SetActive(true);
             Rigidbody2D TempRb = bullet.GetComponent<Rigidbody2D>();
