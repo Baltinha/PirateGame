@@ -503,6 +503,7 @@ GameObject:
   - component: {fileID: 1385637081254807289}
   - component: {fileID: 2753851797682070712}
   - component: {fileID: 5853076278459315085}
+  - component: {fileID: 3989938222951450959}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Enemy
@@ -586,7 +587,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 1.5
   m_rotateSpeed: 720
-  m_maxHeath: 50
+  m_maxHeath: 60
+  m_spritesHealthChange:
+  - {fileID: 21300000, guid: 1ab08389d700f504996aab69c189a967, type: 3}
+  - {fileID: 21300000, guid: 083e4e9dee48ebf4e98dafe128b7d206, type: 3}
+  - {fileID: 21300000, guid: 7cc21baa3369e1a499d28b66d2caa3e4, type: 3}
   m_explodeTimer: 2
   m_explodeSpeed: 0
   m_explodeDamage: 0
@@ -670,6 +675,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3
+--- !u!95 &3989938222951450959
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561673905777703721}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 52f706309eccfd44bbce1be22ff58b50, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8417510499773629693
 GameObject:
   m_ObjectHideFlags: 0

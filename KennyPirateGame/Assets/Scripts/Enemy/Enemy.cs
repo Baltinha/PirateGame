@@ -4,17 +4,19 @@ using System.Diagnostics;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class EnemyMoving : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("Moving")]
     [SerializeField] private float m_speed;
     [SerializeField] private float m_rotateSpeed;
     [Header("Health")]
     [SerializeField] private float m_maxHeath = 100f;
+    [SerializeField] private Sprite [] m_spritesHealthChange;
     [Header("Chaser")]
     [SerializeField] private float m_explodeTimer = 2f;
     [SerializeField] private float m_explodeSpeed;
     [SerializeField] private float m_explodeDamage;
+
 
     private float m_currentHealth;
     private FloatHealthBar m_healthBar;
@@ -22,6 +24,7 @@ public class EnemyMoving : MonoBehaviour
     private float m_temptime;
     private Player m_movementPlayer;
     private Animator m_animator;
+    private SpriteRenderer m_spriteRenderer;
     
 
     [field: SerializeField] public StateOfEnemy StateOfEnemy { get; private set; }
@@ -34,6 +37,7 @@ public class EnemyMoving : MonoBehaviour
         m_healthBar = GetComponentInChildren<FloatHealthBar>();
         m_targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
         m_movementPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     void Start()
     {
@@ -73,13 +77,14 @@ public class EnemyMoving : MonoBehaviour
 
             if (m_currentHealth <= 0)
             {
-                //this.gameObject.SetActive(false);
-                //m_currentHealth = m_maxHeath;
-                //this.transform.position = Vector3.zero;
+
+                m_animator.SetBool("ItsDead", true);
                 GameManager.Instance.PointsInGame += 1;
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
+
         }
+
 
     }
 
@@ -105,12 +110,14 @@ public class EnemyMoving : MonoBehaviour
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             m_currentHealth -= bullet.BulletDamage;
             m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
+            ChangeSpriteByHealth();
         }
         if (collision.gameObject.CompareTag("SideBullet"))
         {
             SideBullet bullet = collision.gameObject.GetComponent<SideBullet>();
             m_currentHealth -= bullet.BulletDamage;
             m_healthBar.UpdateHealthBar(m_currentHealth, m_maxHeath);
+            ChangeSpriteByHealth();
         }
 
     }
@@ -137,8 +144,13 @@ public class EnemyMoving : MonoBehaviour
         StateOfEnemy = StateOfEnemy.Moving;
     }
 
-    public void DestroyChaser() 
+    public void DestroyGameObj() 
     {
+        Destroy(gameObject);
+    }
+    public void DestroyChacerAttaking()
+    {
+
         DelayPlayerDamageTaken();
         Destroy(gameObject);
     }
@@ -147,5 +159,18 @@ public class EnemyMoving : MonoBehaviour
     {
         m_movementPlayer.CurrentHealth -= m_explodeDamage;
         m_movementPlayer.HealthBar.UpdateHealthBar(m_movementPlayer.CurrentHealth, m_movementPlayer.MaxHeath);
+    }
+
+    public void ChangeSpriteByHealth() 
+    {
+
+        if (m_currentHealth <= 40)
+        {
+            m_animator.SetTrigger("ChangeSprite");
+        }
+        if (m_currentHealth <= 20)
+        {
+            m_animator.SetTrigger("ChangeSprite");
+        }
     }
 }

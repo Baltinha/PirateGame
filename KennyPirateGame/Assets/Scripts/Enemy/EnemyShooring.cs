@@ -9,7 +9,7 @@ public class EnemyShooring : MonoBehaviour
     [SerializeField] private float m_shootTimer = 2f;
     [SerializeField] private float m_bulletForce;
 
-    private EnemyMoving m_enemyMoving;
+    private Enemy m_enemyMoving;
     private float m_temptime;
     private GameObject m_targetPosition;
 
@@ -17,7 +17,7 @@ public class EnemyShooring : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_enemyMoving = GetComponent<EnemyMoving>();
+        m_enemyMoving = GetComponent<Enemy>();
         m_targetPosition = GameObject.FindGameObjectWithTag("Player");
         m_temptime = m_shootTimer;
     }

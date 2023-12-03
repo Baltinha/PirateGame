@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float m_rotatespeed;
     [SerializeField] private float m_maxHeath;
     [SerializeField] private Image m_imageFinal;
-    [SerializeField] private Sprite[] SpriteHealth; 
+    [SerializeField] private Sprite[] m_spriteHealthChange; 
 
     private float m_currentHealth;
     private float m_Horizontal;
@@ -56,6 +56,14 @@ public class Player : MonoBehaviour
 
 
         }
+        if (CurrentHealth <= 65)
+        {
+            m_spriteRenderer.sprite = m_spriteHealthChange[0];
+        }
+        if (CurrentHealth <= 35)
+        {
+            m_spriteRenderer.sprite = m_spriteHealthChange[1];
+        }
         if (m_currentHealth <= 0 )
         {
             this.gameObject.SetActive(false);
@@ -63,14 +71,7 @@ public class Player : MonoBehaviour
             Time.timeScale = 0f;
             GameManager.Instance.TimeIsRunning = false;
         }
-        if (CurrentHealth <= 65) 
-        {
-            m_spriteRenderer.sprite = SpriteHealth[0];
-        }
-        if (CurrentHealth <= 25)
-        {
-            m_spriteRenderer.sprite = SpriteHealth[1];
-        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
