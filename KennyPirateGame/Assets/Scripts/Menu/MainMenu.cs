@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Menu Configs")]
     [SerializeField] private TMP_Text m_gameTimer;
     [SerializeField] private Image m_options;
     [SerializeField] private SpawnEnemy m_spawnEnemy;
@@ -14,17 +15,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Slider m_sliderTimer;
     [SerializeField] private Slider m_sliderEnemy;
 
-    // Start is called before the first frame update
-
-    private void Start()
-    {
-
-
-    }
-    private void Update()
-    {
-        
-    }
     public void StarGame() 
     {
         this.gameObject.SetActive(false);

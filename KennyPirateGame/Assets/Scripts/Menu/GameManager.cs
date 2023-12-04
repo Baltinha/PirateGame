@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Game Manager")]
     [SerializeField] private float m_gameTime;
     [SerializeField] private TMP_Text m_textTime;
     [SerializeField] private Image m_imageFinal;
@@ -21,14 +22,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public bool TimeIsRunning { get => m_timeIsRunning; set => m_timeIsRunning = value; }
 
-    // Start is called before the first frame update
     void Start()
     {
-        //GameTime = m_gameTime;
         Instance = this;
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (TimeIsRunning) 

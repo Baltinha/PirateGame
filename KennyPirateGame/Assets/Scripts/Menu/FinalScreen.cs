@@ -6,16 +6,7 @@ using UnityEngine.UI;
 
 public class FinalScreen : MonoBehaviour
 {
-    [SerializeField] private Image Menu;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Image m_menu;
 
     public void ResetGame() 
     {
@@ -28,6 +19,6 @@ public class FinalScreen : MonoBehaviour
     public void GoToMenu() 
     {
         this.gameObject.SetActive(false);
-        Menu.gameObject.SetActive(true);
+        m_menu.gameObject.SetActive(true);
     }
 }

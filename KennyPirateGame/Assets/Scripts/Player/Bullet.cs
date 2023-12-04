@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("Bullet Damage")]
     [SerializeField] private float m_bulletDamage;
 
     private Animator m_Animator;

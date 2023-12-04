@@ -71,15 +71,12 @@ public class Enemy : MonoBehaviour
                 
                 m_animator.SetBool("ItsExplode", true);
                 m_explodeTimer = m_temptime;
-
             }
 
 
             if (m_currentHealth <= 0)
             {
-
                 m_animator.SetBool("ItsDead", true);
-                
             }
 
         }
@@ -150,7 +147,6 @@ public class Enemy : MonoBehaviour
     }
     public void DestroyChacerAttaking()
     {
-
         DelayPlayerDamageTaken();
         Destroy(gameObject);
     }
@@ -163,7 +159,6 @@ public class Enemy : MonoBehaviour
 
     public void ChangeSpriteByHealth() 
     {
-
         if (m_currentHealth <= 40)
         {
             m_animator.SetTrigger("ChangeSprite");

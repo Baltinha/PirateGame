@@ -49,9 +49,6 @@ public class SpawnEnemy : MonoBehaviour
             SpawnPointRate -= Time.deltaTime;
             if (SpawnPointRate < 0) 
             {
-                //GameObject EnemyRandom = GetPooledObject();
-                //EnemyRandom.SetActive(true);
-
                 int indexRand = Random.Range(0, m_enemysPrefab.Length);
                 GameObject EnemyRandom = m_enemysPrefab[indexRand];
                 Instantiate(EnemyRandom, m_spawnPoints[m_spawnRandomCount].position, Quaternion.identity);

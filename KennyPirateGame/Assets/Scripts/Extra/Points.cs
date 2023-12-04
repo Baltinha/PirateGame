@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class Points : MonoBehaviour
 {
+    [Header("Points Text")]
     [SerializeField] private TMPro.TMP_Text m_TextPoints;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         m_TextPoints.text = GameManager.Instance.PointsInGame.ToString("0");

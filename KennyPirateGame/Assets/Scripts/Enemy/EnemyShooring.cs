@@ -45,7 +45,6 @@ public class EnemyShooring : MonoBehaviour
         if (m_targetFireMainShot == null)
             return;
 
-        //Instantiate(m_prefabBullet, m_targetFireMainShot.position, Quaternion.identity);
         GameObject bullet = ObjectPool.Instance.GetPooledObject();
 
         if (bullet != null)
