@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyShooring : MonoBehaviour
 {
+    [Header("Shooting Config")]
     [SerializeField] private Transform m_targetFireMainShot;
     [SerializeField] private GameObject m_prefabBullet;
     [SerializeField] private float m_shootTimer = 2f;
@@ -14,7 +15,6 @@ public class EnemyShooring : MonoBehaviour
     private GameObject m_targetPosition;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         m_enemyMoving = GetComponent<Enemy>();

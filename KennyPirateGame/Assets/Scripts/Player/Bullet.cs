@@ -16,8 +16,6 @@ public class Bullet : MonoBehaviour
     }
     public float BulletDamage { get => m_bulletDamage; set => m_bulletDamage = value; }
 
-    // Start is called before the first frame update
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -27,20 +25,6 @@ public class Bullet : MonoBehaviour
             DesactivetBullet();
         
         m_Animator.SetBool("ShootFire", true);
-
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //if (collision.gameObject.CompareTag("Bullet"))
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //if (collision.gameObject.CompareTag("SideBullet"))
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //gameObject.SetActive(false);
     }
  
     public void DesactivetBullet () 

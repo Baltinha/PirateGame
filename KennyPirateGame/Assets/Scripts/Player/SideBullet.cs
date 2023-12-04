@@ -39,7 +39,6 @@ public class SideBullet : MonoBehaviour
         
 
         if (collision.gameObject.CompareTag("Enemy"))
-            gameObject.SetActive(false);
             Destroy(gameObject);
         
         if (collision.gameObject.CompareTag("Bullet"))

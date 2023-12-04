@@ -79,8 +79,7 @@ public class Enemy : MonoBehaviour
             {
 
                 m_animator.SetBool("ItsDead", true);
-                GameManager.Instance.PointsInGame += 1;
-                //Destroy(gameObject);
+                
             }
 
         }
@@ -146,6 +145,7 @@ public class Enemy : MonoBehaviour
 
     public void DestroyGameObj() 
     {
+        GameManager.Instance.PointsInGame += 1;
         Destroy(gameObject);
     }
     public void DestroyChacerAttaking()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [Header("Shooting")]
+    [Header("Shooting Config")]
     [SerializeField] private Transform[] m_sideBulletsTarget;
     [SerializeField] private GameObject m_sideBulletPrefab;
     [SerializeField] private Transform m_targetFireMainShot;
